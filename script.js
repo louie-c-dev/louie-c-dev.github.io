@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Object.assign(row.style, {
       display: 'flex',
       width: '100vw',
-      flexWrap: 'wrap
+      flexWrap: 'wrap'
     });
     container.appendChild(row);
 
