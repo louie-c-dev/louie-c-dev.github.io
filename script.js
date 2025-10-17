@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     container.appendChild(row);
 
-    for (const [key, values] of Object.entries(results) {
+    for (const [key, values] of Object.entries(results)) {
       const span = document.createElement('span');
 
       let rawHtml = `<h4>${key}</h4><ul>`;
