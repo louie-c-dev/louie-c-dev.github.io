@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const container = document.getElementById("root");
+  const container = document.getElementById('root');
   const departing = "MEL";
   const destination = "LST";
   const url = `https://digitalapi.jetstar.com/v1/farecache/flights/batch/availability-with-fareclasses?flightCount=5&includeSoldOut=false&requestType=StarterAndMember&from=2025-11-01&end=2025-12-01&departures=${departing}&arrivals=${destination}&direction=outbound&paxCount=1&includeFees=true`;
@@ -27,7 +27,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     }
-  
+
     console.log(`${departing} -> ${destination}`, results);
+
+    const row = Object.assign(document.createElement('div'), {
+      style: {
+        display: 'flex'
+      }
+    });
+    container.appendChild(row);
+
+    for (const [key, values] of Object.entries(results) {
+      const span = document.createElement('span');
+
+      let rawHtml = `<h4>${key}</h4><ul>`;
+      for (const val of values) {
+        rawHtml += `<li>${val}</li>`;
+      }
+      rawHtml += `</ul>`;
+      span.innerHTML = rawHtml;
+
+      row.appendChild(span);
+    }
   })();
 });
