@@ -1,5 +1,7 @@
-const container = document.getElementById("root");
-const testEl = document.createElement("p");
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.getElementById("root");
+  const testEl = document.createElement("p");
 
-testEl.textContent = "Foobar";
-container.appendChild(testEl);
+  testEl.textContent = "Foobar";
+  container.appendChild(testEl);
+});
