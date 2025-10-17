@@ -30,17 +30,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log(`${departing} -> ${destination}`, results);
 
-    const row = Object.assign(document.createElement('div'), {
-      style: {
-        display: 'flex'
-      }
+    const row = document.createElement('div');
+    Object.assign(row.style, {
+      display: 'flex',
+      width: '100vw',
+      flexWrap: 'wrap
     });
     container.appendChild(row);
 
     for (const [key, values] of Object.entries(results)) {
       const span = document.createElement('span');
 
-      let rawHtml = `<h4>${key}</h4><ul>`;
+      let rawHtml = `<h3 style="margin-bottom: 0;">$${key}</h3><ul>`;
       for (const val of values) {
         rawHtml += `<li>${val}</li>`;
       }
