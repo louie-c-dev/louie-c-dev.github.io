@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   const container = document.getElementById('root');
-  const departing = "MEL";
-  const destination = "LST";
-  const url = `https://digitalapi.jetstar.com/v1/farecache/flights/batch/availability-with-fareclasses?flightCount=5&includeSoldOut=false&requestType=StarterAndMember&from=2025-11-01&end=2025-12-01&departures=${departing}&arrivals=${destination}&direction=outbound&paxCount=1&includeFees=true`;
 
-  (async () => {
+  const getFlights = async (departing, destination) => {
+    const url = `https://digitalapi.jetstar.com/v1/farecache/flights/batch/availability-with-fareclasses?flightCount=5&includeSoldOut=false&requestType=StarterAndMember&from=2025-11-01&end=2025-12-01&departures=${departing}&arrivals=${destination}&direction=outbound&paxCount=1&includeFees=true`;
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -28,14 +26,18 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    console.log(`${departing} -> ${destination}`, results);
-
     const row = document.createElement('div');
     Object.assign(row.style, {
       display: 'flex',
       width: '100vw',
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      marginBottom: '32px'
     });
+
+    const heading = document.createElement('h1');
+    heading.textContent = `${departing} → ${destination}`;
+
+    container.appendChild(heading);
     container.appendChild(row);
 
     for (const [key, values] of Object.entries(results)) {
@@ -50,5 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       row.appendChild(span);
     }
-  })();
+  }
+
+  getFlights("MEL", "LST");
+  getFlights("LST", "MEL");
 });
