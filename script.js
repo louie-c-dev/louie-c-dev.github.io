@@ -1,8 +1,21 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('root');
+  const reFetchButton = document.getElementById('refetch-btn');
+
+  const today = new Date();
+  const endDate = new Date(new Date().setMonth(today.getMonth() + 1));
+
+  const formattedFromDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const formattedToDate = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}`;
+
+  const fromDate = document.getElementById('from-date');
+  const toDate = document.getElementById('to-date');
+
+  fromDate.value = formattedFromDate;
+  toDate.value = formattedToDate;
 
   const getFlights = async (departing, destination) => {
-    const url = `https://digitalapi.jetstar.com/v1/farecache/flights/batch/availability-with-fareclasses?flightCount=5&includeSoldOut=false&requestType=StarterAndMember&from=2025-11-01&end=2025-12-01&departures=${departing}&arrivals=${destination}&direction=outbound&paxCount=1&includeFees=true`;
+    const url = `https://digitalapi.jetstar.com/v1/farecache/flights/batch/availability-with-fareclasses?flightCount=5&includeSoldOut=false&requestType=StarterAndMember&from=${fromDate.value}&end=${toDate.value}&departures=${departing}&arrivals=${destination}&direction=outbound&paxCount=1&includeFees=true`;
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -45,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       let rawHtml = `<h3 style="margin-bottom: 0;">$${key}</h3><ul>`;
       for (const val of values) {
-        rawHtml += `<li>${val}</li>`;
+        rawHtml += `<li>${new Date(val).toLocaleString()}</li>`;
       }
       rawHtml += `</ul>`;
       span.innerHTML = rawHtml;
@@ -54,6 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  getFlights("MEL", "LST");
+  reFetchButton.addEventListener('click', () => {
+    container.innerHTML = '';
+
+    getFlights("LST", "MEL");
+    getFlights("MEL", "LST");
+  });
+
   getFlights("LST", "MEL");
+  getFlights("MEL", "LST");
 });
