@@ -67,13 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  reFetchButton.addEventListener('click', () => {
-    container.innerHTML = '';
+  const fetchFlights = async () => {
+    await getFlights("MEL", "LST");
+    await getFlights("LST", "MEL");
+  }
 
-    getFlights("LST", "MEL");
-    getFlights("MEL", "LST");
+  reFetchButton.addEventListener('click', async () => {
+    container.innerHTML = '';
+    fetchFlights();
   });
 
-  getFlights("LST", "MEL");
-  getFlights("MEL", "LST");
+  fetchFlights();
 });
