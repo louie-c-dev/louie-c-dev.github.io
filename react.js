@@ -7,6 +7,7 @@ const App = () => {
   const [fromDate, setFromDate ] = useState('');
   const [toDate, setToDate ] = useState('');
   const [flights, setFlights] = useState([]);
+  const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
     const today = new Date();
@@ -16,7 +17,12 @@ const App = () => {
 
     setFromDate(formattedFromDate);
     setToDate(formattedToDate);
+    setTrigger(true);
   }, []);
+
+  useEffect(() => {
+    if (trigger) getFlights();
+  }, [trigger])
 
   const fetchFlights = async (departing, destination) => {
     const url = `https://digitalapi.jetstar.com/v1/farecache/flights/batch/availability-with-fareclasses?flightCount=5&includeSoldOut=false&requestType=StarterAndMember&from=${fromDate}&end=${toDate}&departures=${departing}&arrivals=${destination}&direction=outbound&paxCount=1&includeFees=true`;
