@@ -4,8 +4,8 @@ const { DatePicker, Button } = Components;
 const { useState, useEffect } = React;
 
 const App = () => {
-  const [fromDate, setFromDate ] = useState('');
-  const [toDate, setToDate ] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [flights, setFlights] = useState([]);
   const [trigger, setTrigger] = useState(false);
 
